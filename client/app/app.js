@@ -24,7 +24,7 @@ import 'font-awesome/css/font-awesome.min.css';
 // Import Simple Line Icons Set
 import 'simple-line-icons/css/simple-line-icons.css';
 
-// react-bootstrap-table2 styles
+// React-Bootstrap Table styles
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 // rc-slider style
@@ -34,14 +34,15 @@ import 'rc-slider/assets/index.css';
 const token = localStorage.getItem('token');
 
 if (token) {
-  // authenticate api authorization
+  // Authenticate API authorization
   setToken(token);
 
-  // authenticate routes
+  // Dispatch authentication action
   store.dispatch({ type: SET_AUTH });
 }
 
-const app = () => (
+// Main App Component
+const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <SocketProvider>
@@ -53,4 +54,4 @@ const app = () => (
   </Provider>
 );
 
-export default app;
+export default App;
