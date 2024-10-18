@@ -1,4 +1,4 @@
-const Mailgun = require('mailgun-js');
+const Mailgun = require('mailgun.js'); // Updated from 'mailgun-js' to 'mailgun.js'
 
 const template = require('../config/template');
 const keys = require('../config/keys');
@@ -8,7 +8,8 @@ const { key, domain, sender } = keys.mailgun;
 class MailgunService {
   init() {
     try {
-      return new Mailgun({
+      const mailgun = new Mailgun();
+      return mailgun.client({
         apiKey: key,
         domain: domain
       });
@@ -31,7 +32,7 @@ exports.sendEmail = async (email, type, host, data) => {
       text: message.text
     };
 
-    return await mailgun.messages().send(config);
+    return await mailgun.messages.create(domain, config); // Updated to use mailgun.js syntax
   } catch (error) {
     return error;
   }
