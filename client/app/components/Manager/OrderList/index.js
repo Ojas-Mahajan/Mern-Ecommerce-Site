@@ -1,13 +1,5 @@
-/**
- *
- * OrderList
- *
- */
-
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-
 import { formatDate } from '../../../utils/date';
 
 const OrderList = props => {
@@ -56,16 +48,21 @@ const OrderList = props => {
                   </div>
                   <div className='mb-1'>
                     <span>Ordered on</span>
-                    <span className='order-label'>{` ${formatDate(
-                      order.created
-                    )}`}</span>
+                    <span className='order-label'>{` ${formatDate(order.created)}`}</span>
                   </div>
                   <div className='mb-1'>
                     <span>Order Total</span>
-                    <span className='order-label'>{` $${
-                      order?.totalWithTax ? order?.totalWithTax : 0
-                    }`}</span>
+                    <span className='order-label'>{` $${order?.totalWithTax ? order?.totalWithTax : 0}`}</span>
                   </div>
+                  {/* Display customer address */}
+                  {order.address && (
+                    <div className='mb-1'>
+                      <span>Customer Address:</span>
+                      <div className='order-label'>
+                        {`${order.address.street}, ${order.address.city}, ${order.address.state} ${order.address.zip}`}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
