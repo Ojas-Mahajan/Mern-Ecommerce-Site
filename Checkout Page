@@ -1,0 +1,144 @@
+<!DOCTYPE html
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .order-details, .payment-details {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Checkout Page</h1>
+
+    <!-- Order details section -->
+    <div class="order-details">
+        <h3>Order Information</h3>
+        <p><strong>Product:</strong> Laptop</p>
+        <p><strong>Amount:</strong> $1000.00</p>
+    </div>
+
+    <!-- Payment form -->
+    <div class="payment-details">
+        <h3>Payment Details</h3>
+        <form id="payment-form">
+            <!-- Stripe Card Element will be inserted here -->
+            <div id="card-element"></div>
+            
+            <!-- Error message displayed here -->
+            <div id="card-errors" role="alert"></div>
+            
+            <button id="submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <script>
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+        const elements = stripe.elements();
+
+        // Set up Stripe.js and Elements to use in checkout form
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        const form = document.getElementById('payment-form');
+        const submitButton = document.getElementById('submit');
+        const cardErrors = document.getElementById('card-errors');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            submitButton.disabled = true;
+
+            const {paymentMethod, error} = await stripe.createPaymentMethod('card', cardElement);
+
+            if (error) {
+                cardErrors.textContent = error.message;
+                submitButton.disabled = false;
+            } else {
+                processPayment(paymentMethod.id);
+            }
+        });
+
+        // Simulate server-side payment process
+        async function processPayment(paymentMethodId) {
+            const response = await fetch('/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    paymentMethodId: paymentMethodId,
+                    amount: 100000  // Amount in cents (e.g., $1000.00 = 100000)
+                })
+            });
+
+            const paymentResult = await response.json();
+
+            if (paymentResult.error) {
+                cardErrors.textContent = paymentResult.error;
+                submitButton.disabled = false;
+            } else {
+                alert('Payment successful! Your order has been placed.');
+                submitButton.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+const express = require('express');
+const app = express();
+const stripe = require('stripe')('YOUR_STRIPE_SECRET_KEY');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
+app.post('/create-payment-intent', async (req, res) => {
+    const { paymentMethodId, amount } = req.body;
+
+    try {
+        // Create a PaymentIntent with the provided payment method and amount
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: amount,
+            currency: 'usd',
+            payment_method: paymentMethodId,
+            confirm: true
+        });
+
+        res.send({ success: true });
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+});
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
