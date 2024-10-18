@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Mongoose = require('mongoose');
+const Product = require('../../models/product');
+const RecentlyViewed = require('../../models/recentlyViewed');
+const productController = require('../../controllers/product_controller');
+const auth = require('../../middleware/auth');
 
 // Bring in Models & Utils
 const Product = require('../../models/product');
