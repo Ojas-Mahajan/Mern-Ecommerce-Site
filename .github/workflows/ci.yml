@@ -1,0 +1,35 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'         # Adjust the Node.js version as needed
+          cache: 'npm'               # Enable dependency caching for faster builds
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Linting
+        run: npm run lint          # Ensure your package.json has a "lint" script
+
+      - name: Run Unit Tests
+        run: npm run test:unit     # Ensure a "test:unit" script is defined
+
+      - name: Run Integration Tests
+        run: npm run test:integration  # Ensure a "test:integration" script is defined
