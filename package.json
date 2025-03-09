@@ -5,6 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "lint": "eslint ."
+    "test:unit": "jest --config=jest.unit.config.js",
+    "test:integration": "jest --config=jest.integration.config.js"
     "dev": "npm-run-all --parallel dev:*",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
