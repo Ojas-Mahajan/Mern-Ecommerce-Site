@@ -81,11 +81,10 @@ class Navigation extends React.PureComponent {
         <div className='d-flex'>
           <img
             className='item-image'
-            src={`${
-              suggestion.imageUrl
-                ? suggestion.imageUrl
-                : '/images/placeholder-image.png'
-            }`}
+            src={`${suggestion.imageUrl
+              ? suggestion.imageUrl
+              : '/images/placeholder-image.png'
+              }`}
           />
           <div>
             <Container>
@@ -96,7 +95,7 @@ class Navigation extends React.PureComponent {
               </Row>
               <Row>
                 <Col>
-                  <span className='price'>${suggestion.price}</span>
+                  <span className='price'>₱{suggestion.price}</span>
                 </Col>
               </Row>
             </Container>
@@ -136,29 +135,29 @@ class Navigation extends React.PureComponent {
     };
 
     return (
-      <header className='header fixed-mobile-header'>
-        <div className='header-info'>
+      <header className='header fixed-mobile-header'  >
+        <div className='header-info' >
           <Container>
             <Row>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-truck' />
-                <span>Free Shipping</span>
+                <span>Shipping Via LBC :  <img src="/images/social-icons/lbc.png" width="50" height="50" /></span>
               </Col>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-credit-card' />
-                <span>Payment Methods</span>
-              </Col>
+                <span>Payment Methods: <img src="/images/social-icons/cod.png" width="50" height="50" /> <img src="/images/social-icons/gcash2.png" width="50" height="30" /> <img src="/images/social-icons/PayMaya_Logo.png" width="50" height="30" /></span>
+              </Col >
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-phone' />
-                <span>Call us 951-999-9999</span>
+                <span>Call us 09152212673 , Email us: ghostscentsperfumery@gmail.com</span>
               </Col>
               <Col xs='12' className='text-center d-block d-md-none'>
                 <i className='fa fa-phone' />
-                <span> Need advice? Call us 951-999-9999</span>
+                <span> Need advice? Call us 09152212673</span>
               </Col>
-            </Row>
-          </Container>
-        </div>
+            </Row >
+          </Container >
+        </div >
         <Container>
           <Row className='align-items-center top-header'>
             <Col
@@ -180,7 +179,7 @@ class Navigation extends React.PureComponent {
                   />
                 )}
                 <Link to='/'>
-                  <h1 className='logo'>MERN Store</h1>
+                  <h1 className='logo'> <img src="/images/social-icons/logo-website.png" width="50" height="55" /> GhostScents</h1>
                 </Link>
               </div>
             </Col>
@@ -226,7 +225,7 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 2 }}
               md={{ size: 9, order: 1 }}
               lg={{ size: 4, order: 3 }}
-              // className='px-0'
+            // className='px-0'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
@@ -333,7 +332,7 @@ class Navigation extends React.PureComponent {
             onClick={toggleMenu}
           />
         </div>
-      </header>
+      </header >
     );
   }
 }

@@ -10,7 +10,7 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../utils/auth');
-const { s3Upload } = require('../../utils/storage');
+const {s3Upload} = require('../../utils/storage');
 const {
   getStoreProductsQuery,
   getStoreProductsWishListQuery

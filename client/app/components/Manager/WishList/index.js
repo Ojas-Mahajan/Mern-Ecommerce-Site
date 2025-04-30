@@ -22,11 +22,10 @@ const WishList = props => {
         <div className='d-flex flex-column justify-content-center align-items-center'>
           <img
             className='item-image'
-            src={`${
-              product.imageUrl
+            src={`${product.imageUrl
                 ? product.imageUrl
                 : '/images/placeholder-image.png'
-            }`}
+              }`}
           />
         </div>
       );
@@ -48,7 +47,7 @@ const WishList = props => {
             {getProductImage(item)}
             <div className='d-flex flex-column justify-content-center px-3 text-truncate'>
               <h4 className='text-truncate'>{item.product.name}</h4>
-              <p className='mb-2 price'>${item.product.price}</p>
+              <p className='mb-2 price'>₱{item.product.price}</p>
               <label className='text-truncate'>{`Wishlist Added on ${formatDate(
                 item.created
               )}`}</label>

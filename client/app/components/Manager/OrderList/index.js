@@ -19,11 +19,10 @@ const OrderList = props => {
       return (
         <img
           className='item-image'
-          src={`${
-            product && product?.imageUrl
-              ? product?.imageUrl
-              : '/images/placeholder-image.png'
-          }`}
+          src={`${product && product?.imageUrl
+            ? product?.imageUrl
+            : '/images/placeholder-image.png'
+            }`}
         />
       );
     } else {
@@ -62,9 +61,8 @@ const OrderList = props => {
                   </div>
                   <div className='mb-1'>
                     <span>Order Total</span>
-                    <span className='order-label'>{` $${
-                      order?.totalWithTax ? order?.totalWithTax : 0
-                    }`}</span>
+                    <span className='order-label'>{` ₱${order?.totalWithTax ? order?.totalWithTax : 0
+                      }`}</span>
                   </div>
                 </div>
               </div>

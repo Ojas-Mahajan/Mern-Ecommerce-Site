@@ -67,11 +67,10 @@ class ProductPage extends React.PureComponent {
                 <div className='position-relative'>
                   <img
                     className='item-image'
-                    src={`${
-                      product.imageUrl
+                    src={`${product.imageUrl
                         ? product.imageUrl
                         : '/images/placeholder-image.png'
-                    }`}
+                      }`}
                   />
                   {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                     <p className='stock out-of-stock'>Out of stock</p>
@@ -101,7 +100,7 @@ class ProductPage extends React.PureComponent {
                         </p>
                       )}
                       <p className='item-desc'>{product.description}</p>
-                      <p className='price'>${product.price}</p>
+                      <p className='price'>₱{product.price}</p>
                     </div>
                     <div className='item-customize'>
                       <Input
