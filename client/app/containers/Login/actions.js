@@ -74,6 +74,8 @@ export const login = () => {
       dispatch(setAuth());
       dispatch(success(successfulOptions));
 
+      dispatch(push('/'));
+
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
       const title = `Please try to login again!`;
