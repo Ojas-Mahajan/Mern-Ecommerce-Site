@@ -23,7 +23,10 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from 'reactstrap';
 
 import actions from '../../actions';
@@ -36,6 +39,9 @@ import Menu from '../NavigationMenu';
 import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
+  state = {
+    showPaymentModal: false
+  }
   componentDidMount() {
     this.props.fetchStoreBrands();
     this.props.fetchStoreCategories();
@@ -49,6 +55,12 @@ class Navigation extends React.PureComponent {
   toggleMenu() {
     this.props.fetchStoreCategories();
     this.props.toggleMenu();
+  }
+
+  togglePaymentModal = () =>{
+    this.setState(prev => ({
+      showPaymentModal: !prev.showPaymentModal
+    }))
   }
 
   getSuggestionValue(suggestion) {
@@ -142,11 +154,17 @@ class Navigation extends React.PureComponent {
             <Row>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-truck' />
-                <span>Free Shipping</span>
+                <span onClick={()=>history.push('/shipping')}
+                style={{ cursor: 'pointer', textDecoration: 'underline', marginLeft: '5px' }}>Free Shipping</span>
               </Col>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-credit-card' />
-                <span>Payment Methods</span>
+                <span
+                  onClick={this.togglePaymentModal}
+                  style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  Payment Methods
+                </span>
               </Col>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-phone' />
@@ -293,6 +311,15 @@ class Navigation extends React.PureComponent {
                         <DropdownItem onClick={() => history.push('/register')}>
                           Sign Up
                         </DropdownItem>
+                        <DropdownItem
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            this.togglePaymentModal();
+                          }}
+                        >
+                          Payment Methods
+                        </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   )}
@@ -333,6 +360,14 @@ class Navigation extends React.PureComponent {
             onClick={toggleMenu}
           />
         </div>
+        {/* Payment Modal */}
+        <Modal isOpen={this.state.showPaymentModal} toggle={this.togglePaymentModal}>
+          <ModalHeader toggle={this.togglePaymentModal}>Payment Methods</ModalHeader>
+          <ModalBody>
+            <p>We accept all major credit cards, UPI, and net banking.</p>
+            <p>Cash on delivery is also available.</p>
+          </ModalBody>
+        </Modal>
       </header>
     );
   }
