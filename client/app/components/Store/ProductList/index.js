@@ -9,9 +9,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import AddToWishList from '../AddToWishList';
+import AddToCompare from '../AddToCompare';
 
 const ProductList = props => {
-  const { products, updateWishlist, authenticated } = props;
+  const { 
+    products, 
+    updateWishlist, 
+    authenticated, 
+    compareItems, 
+    addToCompare, 
+    toggleCompareMenu 
+  } = props;
 
   return (
     <div className='product-list'>
@@ -26,6 +34,16 @@ const ProductList = props => {
                   enabled={authenticated}
                   updateWishlist={updateWishlist}
                   authenticated={authenticated}
+                />
+              </div>
+              
+              <div className='add-compare-box'>
+                <AddToCompare
+                  id={product._id}
+                  compareItems={compareItems}
+                  addToCompare={() => addToCompare(product)}
+                  authenticated={authenticated}
+                  toggleCompareMenu={toggleCompareMenu}
                 />
               </div>
 

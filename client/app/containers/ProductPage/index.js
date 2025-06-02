@@ -53,8 +53,16 @@ class ProductPage extends React.PureComponent {
       reviews,
       reviewFormData,
       reviewChange,
-      reviewFormErrors
+      reviewFormErrors,
+      compareItems,
+      addToCompare
     } = this.props;
+    
+    const isProductInCompare = compareItems.some(item => item._id === product._id);
+    
+    const handleAddToCompare = product => {
+      addToCompare(product);
+    };
 
     return (
       <div className='product-shop'>
@@ -150,6 +158,12 @@ class ProductPage extends React.PureComponent {
                           onClick={() => handleAddToCart(product)}
                         />
                       )}
+                      <Button
+                        variant='secondary'
+                        text={isProductInCompare ? 'Remove From Compare' : 'Add To Compare'}
+                        className='compare-btn ml-2'
+                        onClick={() => handleAddToCompare(product)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -188,7 +202,8 @@ const mapStateToProps = state => {
     reviewsSummary: state.review.reviewsSummary,
     reviewFormData: state.review.reviewFormData,
     reviewFormErrors: state.review.reviewFormErrors,
-    itemInCart
+    itemInCart,
+    compareItems: state.comparison.compareItems
   };
 };
 
