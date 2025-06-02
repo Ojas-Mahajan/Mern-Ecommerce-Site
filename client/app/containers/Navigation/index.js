@@ -30,10 +30,12 @@ import actions from '../../actions';
 
 import Button from '../../components/Common/Button';
 import CartIcon from '../../components/Common/CartIcon';
+import CompareIcon from '../../components/Store/CompareIcon';
 import { BarsIcon } from '../../components/Common/Icon';
 import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
+import CompareMenu from '../../components/Store/CompareMenu';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
@@ -112,14 +114,17 @@ class Navigation extends React.PureComponent {
       authenticated,
       user,
       cartItems,
+      compareItems,
       brands,
       categories,
       signOut,
       isMenuOpen,
       isCartOpen,
+      isCompareOpen,
       isBrandOpen,
       toggleCart,
       toggleMenu,
+      toggleCompareMenu,
       searchValue,
       suggestions,
       onSearch,
@@ -218,6 +223,10 @@ class Navigation extends React.PureComponent {
                   icon={<BarsIcon />}
                   onClick={() => this.toggleMenu()}
                 />
+                <CompareIcon
+                  compareItems={compareItems}
+                  toggleCompareMenu={toggleCompareMenu}
+                />
                 <CartIcon cartItems={cartItems} onClick={toggleCart} />
               </div>
             </Col>
@@ -229,11 +238,16 @@ class Navigation extends React.PureComponent {
               // className='px-0'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
-                <CartIcon
-                  className='d-none d-md-block'
-                  cartItems={cartItems}
-                  onClick={toggleCart}
-                />
+                <div className='d-none d-md-block header-icons'>
+                  <CompareIcon
+                    compareItems={compareItems}
+                    toggleCompareMenu={toggleCompareMenu}
+                  />
+                  <CartIcon
+                    cartItems={cartItems}
+                    onClick={toggleCart}
+                  />
+                </div>
                 <Nav navbar>
                   {brands && brands.length > 0 && (
                     <Dropdown
@@ -333,6 +347,27 @@ class Navigation extends React.PureComponent {
             onClick={toggleMenu}
           />
         </div>
+
+        {/* hidden compare drawer */}
+        <div
+          className={isCompareOpen ? 'mini-compare-open' : 'hidden-mini-compare'}
+          aria-hidden={`${isCompareOpen ? false : true}`}
+        >
+          <div className='mini-compare'>
+            <CompareMenu 
+              compareItems={compareItems}
+              isCompareOpen={isCompareOpen}
+              toggleCompareMenu={toggleCompareMenu}
+              removeFromCompare={this.props.removeFromCompare}
+            />
+          </div>
+          <div
+            className={
+              isCompareOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
+            }
+            onClick={toggleCompareMenu}
+          />
+        </div>
       </header>
     );
   }
@@ -342,8 +377,10 @@ const mapStateToProps = state => {
   return {
     isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
+    isCompareOpen: state.comparison.isCompareOpen,
     isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
+    compareItems: state.comparison.compareItems,
     brands: state.brand.storeBrands,
     categories: state.category.storeCategories,
     authenticated: state.authentication.authenticated,
