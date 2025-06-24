@@ -1,7 +1,8 @@
 # MERN Ecommerce
 
 ## Description
-
+ This project is originally developed by [mohamedsamara](https://github.com/mohamedsamara/mern-ecommerce) and used under the MIT license. 
+ I am using and modifying it for **learning and portfolio purposes**.
 An ecommerce store built with MERN stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
 
 1. Buyers browse the store categories, products and brands
